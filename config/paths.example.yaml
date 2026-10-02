@@ -1,0 +1,5 @@
+# Copy to config/paths.yaml (git-ignored) and edit for your machine.
+# Check with:  swothr paths
+root:       /media/saiful/LaCie/Coastal_Enginnering_SWOT_HR   # Data/, Results/, Outputs/ live here
+bathymetry: /media/saiful/LaCie/Data/Bathymetry/E4_2024.nc     # EMODnet-style lon/lat/elevation grid
+storms_dir: /media/saiful/LaCie/SWOT_HR_Project/Storms         # Storm_<name>.nc / .csv (storm map only)

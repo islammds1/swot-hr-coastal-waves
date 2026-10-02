@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swot-hr-waves"
+version = "4.3.0"
+description = "Swell wavelength, period and direction from SWOT KaRIn HR pixel clouds (FFT and Radon), validated against MARC/WW3"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24", "scipy>=1.10", "pandas>=2.0", "xarray>=2023.1", "netCDF4",
+  "matplotlib>=3.7", "pyproj>=3.5", "scikit-image>=0.21", "statsmodels>=0.14",
+  "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+maps = ["cartopy>=0.22"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+swothr = "swothr.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

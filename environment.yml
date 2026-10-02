@@ -1,0 +1,19 @@
+name: swothr
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - netcdf4
+  - matplotlib
+  - pyproj
+  - scikit-image
+  - statsmodels
+  - pyyaml
+  - cartopy
+  - pytest
+  - pip
+  - pip:
+      - -e .
