@@ -1,32 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Per-box diagnostics for selected SWOT HR boxes, built on the v4 pipelines:
 
-    swothr/pipelines/fft.py     (FFT, v4.3)
-    swothr/pipelines/radon.py   (Radon / Fourier-slice, v4.3)
-
-For each group, two images:
-  box diagnostics, one row of four panels per box:
-        1. gridded, plane-detrended SSH with the retrieved propagation direction
-           (arrow = lobe resolved; double-headed line = 180 deg ambiguity open)
-        2. FFT wavenumber spectrum, window-averaged, noise-subtracted, in dB
-        3. Radon panel: window-averaged sinogram (RADON_PANEL = "sinogram") or the
-           Fourier-slice spectrum actually used by the Radon retrieval ("slice")
-        4. SSH-sigma0 cross-spectrum Re C -- this is what fixes the arrowhead
-  k-plane overlay: the dominant k-vector of every box in the group, so
-      rotation (refraction) and |k| change (shoaling) are seen directly.
-
-Nothing in the pipelines is duplicated or modified: both scripts are imported
-and their own functions are called in the same order as process_one_box().
-The Radon sinogram is not returned by the pipeline, so skimage.radon is wrapped
-while compute_welch_spectra() runs and the sinograms it produces are captured.
-
-Boxes are selected by their FFT name (column "Box" of the FFT CSV). The box
-geometry comes from that CSV, and the matching Radon row, if a Radon CSV is
-given, is found by (grid_ix, grid_iy), so the two numbering schemes never
-need to agree.
-"""
 
 import importlib.util
 from pathlib import Path
