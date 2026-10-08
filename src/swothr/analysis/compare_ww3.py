@@ -1,61 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-FFT vs Radon vs MARC/WW3 on a matched 5 km box set, all storms.
 
-Same construction as the two-way FFT/Radon comparison, with WW3 added as a
-third leg. Because both estimators now emit a row for every box that passes the
-coverage gates, the three fields live on one identical box grid and every
-statistic below is a paired per-box difference with no selection step.
-
-Pairs, written as (y minus x):
-    FFT   - WW3      observation against model
-    Radon - WW3      observation against model
-
-The estimator-against-estimator leg (Radon - FFT) lives in its own script and
-is off by default here; set INCLUDE_RADON_FFT = True to add it back.
-
-What the model side is
-----------------------
-WW3 peak wavelength is NOT taken from a mean-wavelength field. It is obtained
-from fp through the dispersion relation, using the same depth and current the
-SWOT pipeline used. WW3 integrates its spectrum on the INTRINSIC frequency
-grid, so by default fp is intrinsic and
-
-    k_p :  2 pi fp = sqrt(g k tanh(k h))                 (WW3_FP_IS_ABSOLUTE=False)
-    k_p :  2 pi fp = sqrt(g k tanh(k h)) + k U_along     (WW3_FP_IS_ABSOLUTE=True)
-
-The model PERIOD is Tp = 1/fp taken directly from the model, with NO Doppler
-correction and no recomputation. Each SWOT period is compared with it:
-
-    T_int (SWOT, no current)          vs   Tp_WW3 = 1/fp
-    T_abs (SWOT, with k.U Doppler)    vs   Tp_WW3 = 1/fp
-
-for FFT and for Radon. WW3 fp is computed on the intrinsic frequency grid, so
-T_int vs Tp_WW3 is the like-for-like pair; T_abs vs Tp_WW3 shows how much the
-Doppler term moves SWOT away from (or towards) the model.
-
-Direction
----------
-theta_obs_degN is written for every box. lobe_resolved is True only where
-SWOT's own velocity-bunching vote chose the lobe; lobe_source == "model" means
-the 180 deg choice was taken from this same model. By default
-(DIR_POPULATION = "all_axial") every grade A/B box enters the direction
-comparison as an AXIS: the difference is folded into [-90, 90], which does not
-depend on the lobe and so is a fair test for resolved, model-chosen and
-unresolved boxes alike. Full 360 deg statistics are also tabulated, on SWOT-
-resolved lobes (dir_*, independent) and on all boxes (all_*, not independent).
-
-Outputs
--------
-    fft_radon_ww3_stats.csv      agreement table, per storm and per pair
-    fft_radon_ww3_perbox.csv     paired per-box values and differences
-    fft_radon_ww3_scatter.png    scatter grid: lambda, T_int vs Tp, T_abs vs Tp, theta
-    fft_radon_ww3_hist.png       difference histograms, both estimators vs WW3
-    fft_radon_ww3_sens_*.csv     response-threshold sensitivity tables (v4.3)
-    fft_radon_ww3_sens_response.png  error against peak filter response
-    fft_radon_ww3_doppler.csv    SWOT Doppler size; T_int vs T_abs closeness to Tp
-"""
 
 import os
 import warnings
