@@ -1,31 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Synthetic sensitivity of the spectral centroid to the instrument power response.
 
-Physical question behind RESPONSE_MIN_MASK / RESPONSE_WARN: where the power
-response R(k) is small and steep, the product S(k) R(k) is tilted towards the
-better-transmitted (longer, or more oblique) wavenumbers, so the energy-weighted
-centroid is biased even with no noise. This script quantifies that bias, with
-the SAME response model as the v4.3 pipelines:
-
-    R(k) = [ H3(k.a, d_al) H3(k.r, d_ac) sinc(kx res/2) sinc(ky res/2) ]^2
-    H3(k, d) = (1 + 2 cos(k d)) / 3
-
-and also the sensitivity of R itself to a +/-10 % error in the across-track
-posting d_ac (the response-model uncertainty).
-
-Directional Gaussian swell spectra are placed on a fine (kx, ky) grid, one lobe
-only, with along-track = +y and look direction = +x (so across-track = x).
-
-Outputs
-    response_sensitivity_synthetic.csv   one row per case and mask value
-    response_sensitivity_synthetic.png   centroid bias against R at the peak
-
-This isolates the LINEAR filter effect only. Velocity bunching, tilt and
-layover are not modelled; the real-data counterpart is the error-vs-response
-table of swothr.analysis.compare_ww3.
-"""
 
 import itertools
 import numpy as np
