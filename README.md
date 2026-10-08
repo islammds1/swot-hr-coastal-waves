@@ -145,7 +145,11 @@ Unit tests cover the response model, bootstrap statistics and the config
 mechanism; every step is import-checked. They need no SWOT data and also run on
 GitHub Actions at each push.
 
-## Reference
+## References
+
+Islam, M.S., Turki, E.I., López Solano, C., Froideval, L., Chartrand, X., Matte, P., Bergsma, E.W.J., Laignel, B., Picot, N., 2026. Revealing coastal
+storm-wave transformations from SWOT HR observation: The English Channel case study. Geophysical Research Letters 53, e2025GL121115.
+doi:10.1029/2025GL121115.
 
 Yu et al. (2026). A first analysis of ocean swell observations with SWOT's
 High-Rate mode. *IEEE Transactions on Geoscience and Remote Sensing*. hal-05610282.
