@@ -1,66 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-FFT vs Radon vs MARC/WW3 on a matched 5 km box set, all storms.
 
-Same construction as the two-way FFT/Radon comparison, with WW3 added as a
-third leg. Because both estimators now emit a row for every box that passes the
-coverage gates, the three fields live on one identical box grid and every
-statistic below is a paired per-box difference with no selection step.
-
-Pairs, written as (y minus x):
-    FFT   - WW3      observation against model
-    Radon - WW3      observation against model
-
-The estimator-against-estimator leg (Radon - FFT) lives in its own script and
-is off by default here; set INCLUDE_RADON_FFT = True to add it back.
-
-What the model side is
-----------------------
-WW3 peak wavelength is NOT taken from a mean-wavelength field. It is obtained
-from fp through the dispersion relation, using the same depth and current the
-SWOT pipeline used. WW3 integrates its spectrum on the INTRINSIC frequency
-grid, so by default fp is intrinsic and
-
-    k_p :  2 pi fp = sqrt(g k tanh(k h))                 (WW3_FP_IS_ABSOLUTE=False)
-    k_p :  2 pi fp = sqrt(g k tanh(k h)) + k U_along     (WW3_FP_IS_ABSOLUTE=True)
-
-(v4.3) The model PERIODS are then recomputed from lambda_p with the SAME
-function the FFT and Radon pipelines use (periods(), copied verbatim):
-
-    T_intrinsic = 2 pi / sqrt(g k tanh(k h))
-    T_absolute  = 2 pi / (sqrt(g k tanh(k h)) + k . U)
-
-with the model direction for k . U. Observation and model therefore go through
-an identical lambda -> T chain, and any period difference is a wavelength (and,
-for T_absolute, direction) difference, not a formula difference.
-
-Two period comparisons are reported:
-    T_int : independent of current and of the 180 deg choice -> primary metric
-    T_abs : needs the propagation direction; only boxes whose direction is
-            resolved (by SWOT or by the model) enter, and those must NOT be
-            read as a direction validation.
-
-Direction
----------
-theta_obs_degN is written for every box. lobe_resolved is True only where
-SWOT's own velocity-bunching vote chose the lobe; lobe_source == "model" means
-the 180 deg choice was taken from this same model. Direction statistics are
-therefore computed on lobe_resolved (SWOT-only) boxes: a model-chosen lobe
-agrees with the model by construction. The WW3 direction convention
-("from" vs "towards") is tested against the data rather than assumed; see
-DIR_OFFSET_MODE.
-
-Outputs
--------
-    fft_radon_ww3_stats.csv      agreement table, per storm and per pair
-    fft_radon_ww3_perbox.csv     paired per-box values and differences
-    fft_radon_ww3_scatter.png    3x3 scatter grid
-    fft_radon_ww3_hist.png       difference histograms, both estimators vs WW3
-    fft_radon_ww3_sens_*.csv     response-threshold sensitivity tables (v4.3)
-    fft_radon_ww3_sens_response.png  error against peak filter response
-    fft_radon_ww3_doppler.csv    Doppler consistency, SWOT vs model
-"""
 
 import os
 import warnings
