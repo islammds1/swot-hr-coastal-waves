@@ -1,42 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-SWOT HR wave fields vs bathymetry -- Storm Ciarán (cycle 6, pass 42)
-
-Home message tested here:
-    shoaling    : wavelength / depth relationship        (Z1, Z3)
-    refraction  : direction / depth-gradient relationship (Z1, Z3)
-    diffraction : localized departure + spreading behind an obstacle (Z5)
-
-Figures
-  fig_shoaling.png
-      (a) λ vs h with linear dispersion at the transect period T0
-      (b) λ/L0 vs h/L0: both transects collapse on tanh dispersion
-      (c) T (intrinsic and current-corrected) vs h: period conservation check
-  fig_refraction.png
-      top : zone maps, isobaths, wave arrows, upslope (-∇h) arrows and the
-            refraction ray traced from the deepest box through the bathymetry
-      (c) direction along the ray vs distance, with the observed boxes
-      (d) observed vs ray-predicted propagation direction, 1:1
-  fig_diffraction_Z5.png
-      All four Z5 boxes lie downwave of the islands; the southern pair lies
-      inside the geometric shadow of Sark, the northern pair outside it.
-      (a) map: a fan of refraction rays launched up-wave with the ambient
-          swell direction, stopped by land -> geometric shadow of the islands
-      (b) refraction-only ray density relative to an undisturbed fan
-      (c) directional spreading, (d) multimodality / coherence,
-      (e) observed energy relative to the open-sea median
-
-Physics
-  - dispersion  ω² = g k tanh(kh), T0 conserved along a transect
-  - refraction  ray equation dθ/ds = -(1/c)(∂c/∂x cosθ - ∂c/∂y sinθ),
-                c from linear dispersion at T0 on the bathymetry smoothed to the
-                box scale (the general form of Snell's law for curved contours)
-  - ray density ∝ energy flux in geometric optics (refraction-only energy)
-  - diffraction transition width at a shadow edge ~ sqrt(λ x)
-
-Only the FFT v4 CSV and the bathymetry file are needed.
-"""
 
 from pathlib import Path
 
