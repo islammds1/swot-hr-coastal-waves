@@ -1,27 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Origin of the SWOT HR wavelength bias against MARC/WW3.
 
-Panels
-  (a) dλ/λ vs |cross-track|, FFT and Radon, median + 95 % bootstrap CI,
-      shaded linear-filter bound from the synthetic test.
-  (b) same for FFT inside depth classes (depth-confound control).
-  (c) |k|SWOT/|k|WW3 per component (along / across track) vs |cross-track|.
-  (d) dλ/λ vs along-track alignment A = |k_al|/|k| of the model wave,
-      with the distribution of A.
-
-Bins with fewer than MIN_N boxes are drawn hollow and are excluded from the
-printed summary. Sample sizes are written under each FFT point.
-
-Printed / saved:
-  - binned statistics (CSV) for every panel;
-  - consistency check: bias predicted from the component ratios,
-    sqrt(A² r_al² + (1 − A²) r_ac²), against the observed bias per A bin;
-  - correlation of A with cross-track distance and depth (confound check);
-  - multiple regression of dλ/λ on standardised cross-track distance, depth,
-    alignment and (if available) model steepness.
-"""
 import os
 import numpy as np
 import pandas as pd
