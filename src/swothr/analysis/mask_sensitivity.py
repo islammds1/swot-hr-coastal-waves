@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Fig. S3 -- Sensitivity of the SWOT HR retrievals to the instrument-response
-mask threshold, from the sens_mXX_* columns written by the v4.3 FFT pipeline.
 
-For every box the pipeline re-picks the dominant partition with mask
-thresholds 0, 0.10, 0.15, 0.20, 0.25 (adopted), 0.30 and 0.40, and stores
-lambda, theta, response and energy ratio (relative to 0.25). Boxes are those
-flagged usable (internal quality passed, grade A/B) at the adopted threshold.
-
-(a) SWOT - WW3 wavelength bias (median, mean, 95% bootstrap CI)
-(b) Per-box wavelength change relative to the 0.25 retrieval
-(c) Per-box direction change relative to the 0.25 retrieval
-(d) Dominant-partition energy removed by the adopted 0.25 mask
-"""
 
 import glob
 import re
