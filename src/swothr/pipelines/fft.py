@@ -573,11 +573,6 @@ def _median_datetime64(values):
 
 def decode_time_da(da):
     """Decode an xarray time-like DataArray without assuming a mission epoch.
-
-    V4.2: numeric CF time arrays are decoded only at finite/non-fill entries.
-    Some SWOT LR files contain the netCDF fill value ~9.969e36 in ``time``.
-    Passing that value directly to pandas/cftime overflows before xarray can
-    decode the useful samples.
     """
     if da is None:
         return None
@@ -1893,12 +1888,7 @@ def coherence_significance(n_eff, alpha=COHERENCE_ALPHA):
 
 def denoise(E, spec, resp_pow):
     """
-    Subtract a noise model shaped by the instrument response.
-
-    A flat pedestal under-subtracts in the swell band, because the noise is
-    filtered by the same 3x3 boxcar as the signal and therefore rises towards
-    long wavelengths. Yu et al. Sec. III-A3 model the noise with the shape of
-    that filter and fit only its amplitude, which is what is done here.
+    Subtract a noise model shaped by the instrument response
     """
     if not SUBTRACT_NOISE_FLOOR:
         return E, np.nan
@@ -2051,11 +2041,6 @@ def flag_nonlinear_artifacts(parts):
 class TiltDiagnostic:
     """
     Scene-level confirmation of the cross-spectrum sign conventions.
-
-    Yu et al. Sec. V-B require Im<h sigma0*> < 0 wherever k.r_hat > 0. This
-    accumulates the |C|-weighted fraction of band bins that satisfy it, plus a
-    2D map of mean Im C in the (k.r_hat, k.a_hat) plane. If the antisymmetry
-    is absent, VB_SIGN is equally suspect and every direction is unreliable.
     """
 
     def __init__(self):
